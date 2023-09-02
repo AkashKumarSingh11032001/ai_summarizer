@@ -9,6 +9,15 @@ const Demo = () => {
     summary: "",
   });
 
+  useEffect(() => {
+    const articleFromLocalStroage = JSON.parse(
+      localStorage.getItem("articles")
+    );
+    if (articleFromLocalStroage) {
+      setArticle(articleFromLocalStroage);
+    }
+  }, []);
+
   const [allArticles, setAllArticles] = useState([]);
 
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
@@ -23,6 +32,7 @@ const Demo = () => {
       const updateAllArticle = [newArticle, ...allArticles];
       setArticle(newArticle);
       setAllArticles(updateAllArticle);
+      localStorage.setItem("articles", JSON.stringify(updateAllArticle));
     }
   };
 
